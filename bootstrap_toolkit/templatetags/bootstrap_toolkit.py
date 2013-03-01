@@ -29,7 +29,7 @@ BOOTSTRAP_CSS_URLS = getattr(settings, 'BOOTSTRAP_CSS_URLS',
     ]
 )
 
-BOOTSTRAP_RESPONSIVE = False
+BOOTSTRAP_RESPONSIVE = getattr(settings, 'BOOTSTRAP_RESPONSIVE', False)
 
 register = template.Library()
 
@@ -50,7 +50,7 @@ def bootstrap_stylesheet_tag():
         out.append(u'<link rel="stylesheet" href="%s">' % url)
     if BOOTSTRAP_RESPONSIVE:
         out.append(u'<meta name="viewport" content="width=device-width, initial-scale=1.0">')
-    return ''.join(out)
+    return '\n    '.join(out)
 
 @register.simple_tag
 def bootstrap_javascript_url(name=None):
