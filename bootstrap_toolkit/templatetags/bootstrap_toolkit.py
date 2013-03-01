@@ -23,25 +23,34 @@ BOOTSTRAP_CSS_BASE_URL = getattr(settings, 'BOOTSTRAP_CSS_BASE_URL',
     BOOTSTRAP_BASE_URL + 'css/'
 )
 
-BOOTSTRAP_CSS_URL = getattr(settings, 'BOOTSTRAP_CSS_URL',
-    BOOTSTRAP_CSS_BASE_URL + 'bootstrap.css'
+BOOTSTRAP_CSS_URLS = getattr(settings, 'BOOTSTRAP_CSS_URL',
+    [
+        BOOTSTRAP_CSS_BASE_URL + 'bootstrap.css',
+    ]
 )
+
+BOOTSTRAP_RESPONSIVE = False
 
 register = template.Library()
 
 @register.simple_tag
-def bootstrap_stylesheet_url():
+def bootstrap_stylesheet_urls():
     """
     URL to Bootstrap Stylesheet (CSS)
     """
-    return BOOTSTRAP_CSS_URL
+    return BOOTSTRAP_CSS_URLS
 
 @register.simple_tag
 def bootstrap_stylesheet_tag():
     """
     HTML tag to insert Bootstrap stylesheet
     """
-    return u'<link rel="stylesheet" href="%s">' % bootstrap_stylesheet_url()
+    out = list()
+    for url in bootstrap_stylesheet_urls():
+        out.append(u'<link rel="stylesheet" href="%s">' % url)
+    if BOOTSTRAP_RESPONSIVE:
+        out.append(u'<meta name="viewport" content="width=device-width, initial-scale=1.0">')
+    return ''.join(out)
 
 @register.simple_tag
 def bootstrap_javascript_url(name=None):
