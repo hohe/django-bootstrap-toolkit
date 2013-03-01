@@ -23,7 +23,7 @@ BOOTSTRAP_CSS_BASE_URL = getattr(settings, 'BOOTSTRAP_CSS_BASE_URL',
     BOOTSTRAP_BASE_URL + 'css/'
 )
 
-BOOTSTRAP_CSS_URLS = getattr(settings, 'BOOTSTRAP_CSS_URL',
+BOOTSTRAP_CSS_URLS = getattr(settings, 'BOOTSTRAP_CSS_URLS',
     [
         BOOTSTRAP_CSS_BASE_URL + 'bootstrap.css',
     ]
